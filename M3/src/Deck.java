@@ -115,13 +115,6 @@ public class Deck
    // Returns top card
    public Card dealCard()
    {
-      /*
-      // Check if there are any more cards to deal
-      // Return card with error if no more left
-      if (topCard == cards.length)
-         return new Card('Z', Card.Suit.CLUBS);
-      */
-      
       // Increment topCard and return Card object
       int topPosition = topCard;
       topCard += 1;
@@ -140,7 +133,6 @@ public class Deck
          
          // Populate
          masterPack = new Card[STD_DECK_SIZE];
-         
          int packIndex = 0;
          for (int i = 0; i < cardValues.length; ++i)
          {
