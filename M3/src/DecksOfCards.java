@@ -1,9 +1,11 @@
 /*
  * DecksOfCards.java
  * 
+ * Jonathan Delgado
  * Tayler Mauk
  * Bodey Provansal
- * Jonathan Delgado
+ * 
+ * Simulation of dealing playing cards.
  */
 
 public class DecksOfCards
@@ -12,6 +14,8 @@ public class DecksOfCards
    public static void main(String[] args)
    {
       // Phase 1
+      
+      System.out.println("***Card Test***");
       Card c1 = new Card();
       Card c2 = new Card('H', Card.Suit.CLUBS);
       Card c3 = new Card('3', Card.Suit.HEARTS);
@@ -19,8 +23,11 @@ public class DecksOfCards
       System.out.println(c1);
       System.out.println(c2);
       System.out.println(c3);
-
+      
       // Phase 2
+      
+      System.out.println();
+      System.out.println("***Hand Test***");
       Hand h1 = new Hand();
       while (true)
       {
@@ -47,202 +54,50 @@ public class DecksOfCards
       }
 
       System.out.println(h1.toString());
-   }
+      
+      // Phase 3
+      
+      System.out.println();
+      System.out.println("***Deck Test (2 Packs)***");
+      Deck d1 = new Deck(2);
 
-}
-
-class Card
-{
-   public enum Suit
-   {
-      CLUBS,
-      DIAMONDS,
-      HEARTS,
-      SPADES
-   };
-   
-   // Face value of card (2, 3, K) NOTE: T = 10
-   private char value;
-   private Suit suit;
-   
-   // True if card is in illegal state
-   private boolean errorFlag;
-   
-   // Constructors
-   
-   Card(char value, Suit suit)
-   {
-      set(value, suit);
-   }
-   
-   Card()
-   {
-      set('A', Suit.SPADES);
-   }
-   
-   // Accessors
-   
-   public Suit getSuit()
-   {
-      return suit;
-   }
-   
-   public char getValue()
-   {
-      return value;
-   }
-   
-   public boolean getErrorFlag()
-   {
-      return errorFlag;
-   }
-   
-   // Mutators
-   
-   public boolean set(char value, Suit suit)
-   {
-      // Check for validity
-      if (isValid(value, suit))
+      int i = 0;
+      while (d1.inspectCard(i).getErrorFlag() == false)
       {
-         this.value = value;
-         this.suit = suit;
-         errorFlag = false;
-         return true;
+         System.out.println(i + ") " + d1.dealCard());
+         ++i;
+      }
+
+      d1.init(2);
+      d1.shuffle();
+      System.out.println("SHUFFLE==========");
+      i = 0;
+      while (d1.inspectCard(i).getErrorFlag() == false)
+      {
+         System.out.println(i + ") " + d1.dealCard());
+         ++i;
       }
       
-      // Not valid, no data is changed
-      errorFlag = true;
-      return false;
-   }
-   
-   // Only returns data if card is valid
-   public String toString()
-   {
-      if (errorFlag)
-         return "[INVALID CARD]";
-      return value + " of " + suit;
-   }
-   
-   // Determines if this is equal to card based on field values
-   public boolean equals(Card card)
-   {
-      if (card == null)
-         return false;
-      
-      // Compare field values
-      if (this.value == card.value)
+      System.out.println();
+      System.out.println("***Deck Test (1 Pack)***");
+      Deck d2 = new Deck();
+
+      i = 0;
+      while (d2.inspectCard(i).getErrorFlag() == false)
       {
-         if (this.suit == card.suit)
-            return true;
-      }
-      
-      return false;
-   }
-   
-   // Determines validity of value
-   private boolean isValid(char value, Suit suit)
-   {
-      // Acceptable card values
-      char[] validCardValues =
-      {'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'};
-      
-      // Check if value is in validValues
-      for (int i = 0; i < validCardValues.length; ++i)
-      {
-         if (value == (validCardValues[i]))
-            return true;
-      }
-      
-      // Not a valid value
-      return false;
-   }
-}
-
-/**
- * Hand of cards.
- */
-class Hand
-{
-   public static final int MAX_CARDS = 50;
-   private Card[] myCards = new Card[MAX_CARDS];
-   private int numCards;
-
-   /**
-    * Initializes hand, creates empty array of cards and sets `numCards`.
-    */
-   public Hand()
-   {
-      resetHand();
-   }
-
-   /**
-    * Resets the hand by emptying the array of cards and zeroing `numCards`.
-    */
-   public void resetHand()
-   {
-      myCards = new Card[MAX_CARDS];
-      numCards = 0;
-   }
-
-   /**
-    * Adds a card to the hand. We reject this with `false` if the hand is full.
-    * We copy the data and cast it into a new card to prevent mutation upstream.
-    */
-   public boolean takeCard(Card card)
-   {
-      if (numCards >= MAX_CARDS)
-      {
-         return false;
+         System.out.println(i + ") " + d2.dealCard());
+         ++i;
       }
 
-      Card newCard = new Card(card.getValue(), card.getSuit());
-      myCards[numCards++] = newCard;
-      return true;
-   }
-
-   /**
-    * Finds the most recent card, removed it from the hand, and returns it.
-    */
-   public Card playCard()
-   {
-      numCards--;
-      Card card = myCards[numCards];
-      myCards[numCards] = null;
-      return card;
-   }
-
-   /**
-    * Stringifies the current Hand.
-    */
-   public String toString()
-   {
-      String output = "";
-      for (int i = 0; i < numCards; i++)
+      d2.init(1);
+      d2.shuffle();
+      System.out.println("SHUFFLE==========");
+      i = 0;
+      while (d2.inspectCard(i).getErrorFlag() == false)
       {
-         output += myCards[i] + " ";
+         System.out.println(i + ") " + d2.dealCard());
+         ++i;
       }
-
-      return "Hand = ( " + output + ")";
    }
 
-   /**
-    * Returns the number of cards in the hand.
-    */
-   public int getNumCards()
-   {
-      return numCards;
-   }
-
-   /**
-    * Returns an individual card.
-    */
-   public Card inspectCard(int k)
-   {
-      if (k >= 0 && k < MAX_CARDS)
-      {
-         return myCards[k];
-      }
-
-      return new Card('Z', Card.Suit.CLUBS);
-   }
 }
