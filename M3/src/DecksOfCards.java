@@ -98,6 +98,68 @@ public class DecksOfCards
          System.out.println(i + ") " + d2.dealCard());
          ++i;
       }
+      //Phase 4
+      Scanner scan = new Scanner(System.in);
+      boolean validHands = false;
+      int numHands = 0;
+      //Loop until valid number of players are given
+      while(!validHands)
+      {
+         System.out.println("How many hands? (1 - 10, please): ");
+         numHands = scan.nextInt();
+         if((numHands > 0) & (numHands < 11))
+         {
+            validHands = true;
+         }
+      }
+      //Not Shuffled Deal
+      Deck d3 = new Deck(1);
+      Hand[] myHands = new Hand[numHands];
+      int currCard = 0;
+      for(int currHand = 0; currHand < numHands; ++currHand)
+      {
+         myHands[currHand] = new Hand();
+      }
+      System.out.println("Here are our hands from an unshuffled deck: ");
+      while (d3.inspectCard(currCard).getErrorFlag() == false)
+      {
+         for(int currHand = 0; currHand < numHands; ++currHand)
+         {
+            if(currCard > 51)
+            {
+               break;
+            }
+            myHands[currHand].takeCard(d3.dealCard());
+            ++currCard;
+         }
+      }
+      for(int currHand = 0; currHand < numHands; ++currHand)
+      {
+         System.out.println(currHand + ") " + myHands[currHand].toString());
+         myHands[currHand].resetHand();
+      }
+      System.out.println();
+      //Shuffled Deal
+      Deck d4 = new Deck(1); 
+      d4.shuffle();
+      currCard = 0;
+      System.out.println("Here are our hands from a shuffled deck: ");
+      while (d4.inspectCard(currCard).getErrorFlag() == false)
+      {
+         for(int currHand = 0; currHand < numHands; ++currHand)
+         {
+            if(currCard > 51)
+            {
+               break;
+            }
+            myHands[currHand].takeCard(d4.dealCard());
+            ++currCard;
+         }
+      }
+      for(int currHand = 0; currHand < numHands; ++currHand)
+      {
+         System.out.println(currHand + ") " + myHands[currHand].toString());
+      }
+      scan.close();
    }
-
 }
