@@ -5,7 +5,7 @@
  * 
  * Hand of cards.
  */
-class Hand
+public class Hand
 {
    public static final int MAX_CARDS = 50;
    private Card[] myCards = new Card[MAX_CARDS];
