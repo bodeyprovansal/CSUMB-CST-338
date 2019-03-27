@@ -98,10 +98,13 @@ public class DecksOfCards
          System.out.println(i + ") " + d2.dealCard());
          ++i;
       }
+      
       //Phase 4
+      
       Scanner scan = new Scanner(System.in);
       boolean validHands = false;
       int numHands = 0;
+      
       //Loop until valid number of players are given
       while(!validHands)
       {
@@ -112,6 +115,7 @@ public class DecksOfCards
             validHands = true;
          }
       }
+      
       //Not Shuffled Deal
       Deck d3 = new Deck(1);
       Hand[] myHands = new Hand[numHands];
@@ -139,6 +143,7 @@ public class DecksOfCards
          myHands[currHand].resetHand();
       }
       System.out.println();
+      
       //Shuffled Deal
       Deck d4 = new Deck(1); 
       d4.shuffle();
