@@ -8,6 +8,8 @@
  * Simulation of dealing playing cards.
  */
 
+import java.util.Scanner;
+
 public class DecksOfCards
 {
 
